@@ -1,5 +1,18 @@
 from torch.utils.data import Dataset, DataLoader
 
+"""
+Dataset:
+1. Load data (image, text, number...), load labels
+2. Preprocessing: rescale image, encode data
+3. Augmentation: rotate, flip, crop, gaussian noise...
+4. Move current data type (e.g. from numpy) to torch tensors
+
+Dataloader:
+Split dataset into batches
+multi-processing
+shuffle in case of training data
+"""
+
 class CustomDataset(Dataset):
     def __init__(self):
         # TODO

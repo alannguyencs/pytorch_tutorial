@@ -11,7 +11,8 @@ CWF = Path(__file__)
 CKPT_PATH = str(CWF.parent.parent.parent.parent) + '/ckpt/'
 
 # Hyper-parameters
+MODEL_NAME = 'linear_regression'
 INPUT_SIZE = 1
-OUTPUT_SIZE = 1
+TARGET_SIZE = 1
 NUM_EPOCHES = 60
 LEARNING_RATE = 1e-3

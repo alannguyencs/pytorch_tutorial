@@ -13,10 +13,10 @@ test_dataset = datasets.MNIST(root='../../data',
 
 # Data loader (input pipeline)
 train_loader = DataLoader(dataset=train_dataset,
-                                           batch_size=BATCH_SIZE,
-                                           shuffle=True)
+                           batch_size=BATCH_SIZE,
+                           shuffle=True)
 
 test_loader = DataLoader(dataset=test_dataset,
-                                          batch_size=BATCH_SIZE,
-                                          shuffle=False)
+                          batch_size=1,
+                          shuffle=False)
 

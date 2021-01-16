@@ -8,3 +8,4 @@ arch = ConvNet(NUM_CLASSES)
 model = Model(arch)
 model.train(train_loader)
 model.test(test_loader)
+

@@ -12,9 +12,10 @@ CWF = Path(__file__)
 CKPT_PATH = str(CWF.parent.parent.parent.parent) + '/ckpt/'
 
 # Hyper-parameters
-MODEL_NAME = 'logistic_regression_model'
+MODEL_NAME = 'logistic_regression'
 INPUT_SIZE = 784
 NUM_CLASSES = 10
 NUM_EPOCHES = 16
 BATCH_SIZE = 64
 LEARNING_RATE = 1e-3
+

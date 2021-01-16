@@ -6,7 +6,7 @@ resnet = torchvision.models.resnet18(pretrained=True)
 
 
 # Save and load the entire model.
-torch.save(resnet, 'model.ckpt')
+torch.save(resnet, 'model.ckpt') #checkpoint
 model = torch.load('model.ckpt')
 
 # Save and load only the model parameters (recommended).

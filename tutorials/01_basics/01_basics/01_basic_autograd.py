@@ -8,6 +8,9 @@ Targets: 10 samples of 1D vector
 Linear model: targets = inputs * weight + bias (like Y = X * W + b)
            --> optimize weight and bias
 reference: https://mccormickml.com/2014/03/04/gradient-descent-derivation/
+https://stackoverflow.com/questions/60068114/what-is-the-default-batch-size-of-pytorch-sgd
+https://discuss.pytorch.org/t/is-the-sgd-in-pytorch-a-real-sgd/9714
+https://discuss.pytorch.org/t/how-sgd-works-in-pytorch/8060
 """
 
 inputs = torch.randn(10, 3)
