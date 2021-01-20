@@ -18,6 +18,8 @@ NUM_EPOCHES = 16
 BATCH_SIZE = 64
 LEARNING_RATE = 1e-3
 
+INF = 1e18
+
 # Device configuration
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print ('device: ', device)
