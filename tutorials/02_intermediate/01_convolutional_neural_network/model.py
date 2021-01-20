@@ -17,12 +17,14 @@ class Model:
         self.epoch_loss = 0
         self.epoch_losses = None
         self.min_epoch_loss = INF
+        self.final_model_state = None
 
     def train(self, train_loader):
         for _ in trange(1, self.num_epochs + 1):
             self.run_epoch(loader=train_loader, is_training=True)
-            self.save_checkpoint()
-        print("checkpoint is saved at " + self.ckpt_path)
+            self.update_result()
+
+        self.save_final_model_state()
 
     def test(self, test_loader):
         self.run_epoch(loader=test_loader, is_training=False)
@@ -64,9 +66,14 @@ class Model:
         epoch_accuracy = self.correct / self.total * 100
         print ("Epoch loss = {:.6f}, accuracy = {:.2f}%".format(epoch_loss, epoch_accuracy))
 
-    def save_checkpoint(self):
+    def update_result(self):
         if self.min_epoch_loss > self.epoch_loss:
             self.min_epoch_loss = self.epoch_loss
-            torch.save(self.model.state_dict(), self.ckpt_path)
+            self.final_model_state = self.model.state_dict()
 
-            #--> to save time, we may save best_model temporary in RAM
+    def save_final_model_state(self):
+        if self.final_model_state is None:
+            return
+
+        torch.save(self.final_model_state, self.ckpt_path)
+        print("final model state is saved at " + self.ckpt_path)
