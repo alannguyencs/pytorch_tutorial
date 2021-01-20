@@ -2,18 +2,26 @@ from constants import *
 
 
 # Convolutional neural network (two convolutional layers)
+"""
+MNIST: input_size = 28 x 28
+after 1st CNN: batch_size x 16 x 14 x 14
+after 2nd CNN: batch_size x 32 x 7 x 7
+"""
+
+
+
 class ConvNet(nn.Module):
     def __init__(self, num_classes=10):
         super(ConvNet, self).__init__()
         self.name = 'CNN'
         self.layer1 = nn.Sequential(
-            nn.Conv2d(1, 16, kernel_size=5, stride=1, padding=2),
+            nn.Conv2d(in_channels=1, out_channels=16, kernel_size=5, stride=1, padding=2),
             nn.BatchNorm2d(16),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2))
 
         self.layer2 = nn.Sequential(
-            nn.Conv2d(16, 32, kernel_size=5, stride=1, padding=2),
+            nn.Conv2d(in_channels=16, out_channels=32, kernel_size=5, stride=1, padding=2),
             nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2))
@@ -23,7 +31,7 @@ class ConvNet(nn.Module):
     def forward(self, x):
         out = self.layer1(x)
         out = self.layer2(out)
-        out = out.view(out.size(0), -1)
+        out = out.view(out.size(0), -1) #batch_size x (7 x 7 x 32), flatten
         out = self.fc(out)
         return out
 

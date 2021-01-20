@@ -1,6 +1,7 @@
 from constants import *
 
-class Model():
+
+class Model:
     def __init__(self, arch):
         self.model = arch.to(device)
         self.ckpt_path = CKPT_PATH + self.model.name + ".ckpt"
@@ -9,15 +10,16 @@ class Model():
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=LEARNING_RATE)
         self.loss = None
 
-        self.num_epoches = NUM_EPOCHES
+        self.num_epochs = NUM_EPOCHS
 
         self.total = 0
         self.correct = 0
         self.epoch_loss = 0
+        self.epoch_losses = None
         self.min_epoch_loss = INF
 
     def train(self, train_loader):
-        for _ in trange(1, self.num_epoches + 1):
+        for _ in trange(1, self.num_epochs + 1):
             self.run_epoch(loader=train_loader, is_training=True)
             self.save_checkpoint()
         print("checkpoint is saved at " + self.ckpt_path)
@@ -32,7 +34,6 @@ class Model():
             if images.size(0) != BATCH_SIZE: continue
             self.run_batch(images, labels)
         self.summarize_epoch()
-
 
     def run_batch(self, images, labels):
         images = images.to(device)
@@ -67,3 +68,5 @@ class Model():
         if self.min_epoch_loss > self.epoch_loss:
             self.min_epoch_loss = self.epoch_loss
             torch.save(self.model.state_dict(), self.ckpt_path)
+
+            #--> to save time, we may save best_model temporary in RAM
