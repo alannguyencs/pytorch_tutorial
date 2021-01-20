@@ -23,6 +23,16 @@ class ConvNet(nn.Module):
     def forward(self, x):
         out = self.layer1(x)
         out = self.layer2(out)
-        out = out.reshape(out.size(0), -1)
+        out = out.view(out.size(0), -1)
         out = self.fc(out)
         return out
+
+
+"""
+Batch normalisation has learnable parameters, because it includes an affine transformation.
+Since the norm is calculated per channel, the parameters γ and β are vectors of size num_channels 
+(one element per channel), which results in an individual scale and shift per channel. 
+As with any other learnable parameter in PyTorch, they need to be created with a fixed size, 
+hence you need to specify the number of channels
+https://pytorch.org/docs/stable/generated/torch.nn.BatchNorm2d.html
+"""
