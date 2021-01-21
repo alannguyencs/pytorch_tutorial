@@ -26,3 +26,4 @@ test_loader = DataLoader(dataset=test_dataset,
                           batch_size=BATCH_SIZE,
                           shuffle=False)
 
+print ("Length train loader = {}, test loader = {}".format(len(train_loader), len(test_loader)))

@@ -26,6 +26,11 @@ class ResidualBlock(nn.Module):
         out = self.conv2(out)
         out = self.bn2(out)
         if self.downsample:
+            """
+            downsample = nn.Sequential(
+                conv3x3(self.in_channels, out_channels, stride=stride),
+                nn.BatchNorm2d(out_channels))
+            """
             residual = self.downsample(x)
         out += residual
         out = self.relu(out)
@@ -33,6 +38,7 @@ class ResidualBlock(nn.Module):
 
 
 # ResNet
+#arch = ResNet(ResidualBlock, [2, 2, 2])
 class ResNet(nn.Module):
     def __init__(self, block, layers, num_classes=10):
         super(ResNet, self).__init__()
@@ -41,7 +47,7 @@ class ResNet(nn.Module):
         self.conv = conv3x3(3, 16)
         self.bn = nn.BatchNorm2d(16)
         self.relu = nn.ReLU(inplace=True)
-        self.layer1 = self.make_layer(block, 16, layers[0])
+        self.layer1 = self.make_layer(block, 16, layers[0], 1)
         self.layer2 = self.make_layer(block, 32, layers[1], 2)
         self.layer3 = self.make_layer(block, 64, layers[2], 2)
         self.avg_pool = nn.AvgPool2d(8)
@@ -61,9 +67,9 @@ class ResNet(nn.Module):
         return nn.Sequential(*layers)
 
     def forward(self, x):
-        out = self.conv(x)
-        out = self.bn(out)
-        out = self.relu(out)
+        out = self.conv(x)     #batch_size x 3 x h x w --> batch_size x 16 x h x w
+        out = self.bn(out)     #batch norm
+        out = self.relu(out)   #ReLU
         out = self.layer1(out)
         out = self.layer2(out)
         out = self.layer3(out)
